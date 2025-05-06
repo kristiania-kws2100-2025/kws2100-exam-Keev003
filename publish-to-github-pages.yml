@@ -1,6 +1,6 @@
 on:
   push:
-    branches: ["master", "feedback", "lecture/*"]
+    branches: ["feedback", "main"]
 permissions:
   id-token: write # to verify the deployment originates from an appropriate source
   pages: write # to deploy to Pages
