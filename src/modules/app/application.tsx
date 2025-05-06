@@ -15,7 +15,7 @@ const osmLayer = new TileLayer({ source: new OSM() });
 
 const railwayStationLayer = new VectorLayer({
   source: new VectorSource({
-    url: "/kws2100-exam-Keev003/public/geojson/jernbanestasjoner.geojson",
+    url: "/kws2100-exam-Keev003/public/api/jernbanestasjoner",
     format: new GeoJSON(),
   }),
 });
