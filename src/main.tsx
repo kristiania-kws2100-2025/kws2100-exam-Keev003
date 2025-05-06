@@ -2,7 +2,7 @@ import React from "react";
 import { useGeographic } from "ol/proj";
 import { createRoot } from "react-dom/client";
 import "ol/ol.css";
-import { Application } from "./app/application";
+import { Application } from "./modules/app/application";
 
 useGeographic();
 
