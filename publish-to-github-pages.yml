@@ -1,9 +1,10 @@
 on:
   push:
-    # Only deploy when the branch name matches one of these
-    # You probably only need `main`, the others are provided to work with the lecture
-    branches: ["main", "reference/*", "lecture/*"]
-
+    branches: ["master", "feedback", "lecture/*"]
+permissions:
+  id-token: write # to verify the deployment originates from an appropriate source
+  pages: write # to deploy to Pages
+  contents: read # to checkout private repositories
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,9 +18,15 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
-      - uses: actions/deploy-pages@v4
-
-    permissions:
-      id-token: write # to verify the deployment originates from an appropriate source
-      pages: write # to deploy to Pages
-      contents: read # to checkout private repositories
+          name: github-pages-artifact
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages-artifact
