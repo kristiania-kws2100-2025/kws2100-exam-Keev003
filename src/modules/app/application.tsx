@@ -20,9 +20,30 @@ const railwayStationLayer = new VectorLayer({
   }),
 });
 
+const railwayLayer = new VectorLayer({
+  source: new VectorSource({
+    url: "/kws2100-exam-Keev003/public/geojson/jernbanelinjer.geojson",
+    format: new GeoJSON(),
+  }),
+});
+
+const counties = new VectorLayer({
+  source: new VectorSource({
+    url: "/kws2100-exam-Keev003/public/geojson/fylker.geojson",
+    format: new GeoJSON(),
+  }),
+});
+
+const highSchool = new VectorLayer({
+  source: new VectorSource({
+    url: "/kws2100-exam-Keev003/public/geojson/vgs.geojson",
+    format: new GeoJSON(),
+  }),
+});
+
 const map = new Map({
   view: new View({ center: [10.8, 59.9], zoom: 8 }),
-  layers: [osmLayer, railwayStationLayer],
+  layers: [osmLayer, railwayStationLayer, railwayLayer, counties, highSchool],
 });
 
 export function Application() {
