@@ -6,9 +6,6 @@ import pg from "pg";
 const postgresql = new pg.Pool({ user: "postgres", password: "postgres" });
 
 const app = new Hono();
-app.get("/", async (c) => {
-  return c.text("Hello World");
-});
 
 app.get("/api/grunnskoler", async (c) => {
   const result = await postgresql.query(
@@ -34,13 +31,12 @@ app.get("/api/grunnskoler", async (c) => {
     ),
   });
 });
+app.use("*", serveStatic({
+  root: "../dist",
+}));
 
-serveStatic({
-  path: "../dist"
-});
-
-const port = process.env.PORT ? parseInt(process.env.PORT) : 3080;
+const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 serve({
   fetch: app.fetch,
-  port
+  port,
 });
