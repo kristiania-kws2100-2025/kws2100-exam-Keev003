@@ -1,7 +1,7 @@
 import { Hono } from "Hono";
 import { serve } from "@hono/node-server";
-import pg from "pg";
 import { serveStatic } from "@hono/node-server/serve-static";
+import pg from "pg";
 
 const postgresql = new pg.Pool({ user: "postgres", password: "postgres" });
 
@@ -34,6 +34,11 @@ app.get("/api/grunnskoler", async (c) => {
     ),
   });
 });
+
+serveStatic({
+  path: "../dist"
+});
+
 const port = process.env.PORT ? parseInt(process.env.PORT) : 3080;
 serve({
   fetch: app.fetch,
