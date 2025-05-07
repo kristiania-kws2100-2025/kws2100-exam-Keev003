@@ -51,7 +51,7 @@ app.get("/api/jernbanelinjer", async (c) => {
           type: "Feature",
           properties,
           geometry: {
-            type: "Linestring",
+            type: "LineString",
             coordinates,
           },
         }),
