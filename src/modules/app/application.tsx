@@ -19,14 +19,14 @@ const elementarySchool = new VectorLayer({
     format: new GeoJSON(),
   }),
 });
-/*
+
 const railwayLayer = new VectorLayer({
   source: new VectorSource({
-    url: "/kws2100-exam-Keev003/public/geojson/jernbanelinjer.geojson",
+    url: "/api/jernbanelinjer",
     format: new GeoJSON(),
   }),
 });
-
+/*
 const counties = new VectorLayer({
   source: new VectorSource({
     url: "/kws2100-exam-Keev003/public/geojson/fylker.geojson",
@@ -43,7 +43,7 @@ const highSchool = new VectorLayer({
 */
 const map = new Map({
   view: new View({ center: [10.8, 59.9], zoom: 8 }),
-  layers: [osmLayer, elementarySchool /*railwayLayer, counties, highSchool*/],
+  layers: [osmLayer, elementarySchool, railwayLayer /*, counties, highSchool*/],
 });
 
 export function Application() {

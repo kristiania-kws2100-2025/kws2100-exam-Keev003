@@ -34,6 +34,30 @@ app.get("/api/grunnskoler", async (c) => {
     ),
   });
 });
+app.get("/api/jernbanelinjer", async (c) => {
+  const result = await postgresql.query(
+      `select banenavn, st_transform(senterlinje, 4326)::json as geometry from banenettverk_cc734c5dc3204a9a821d69ffe8453e96.banelenke`,
+  );
+  return c.json({
+    type: "FeatureCollection",
+    crs: {
+      type: "name",
+      properties: {
+        name: "urn:ogc:def:crs:OGC:1.3:CRS84",
+      },
+    },
+    features: result.rows.map(
+        ({ geometry: { coordinates }, ...properties }) => ({
+          type: "Feature",
+          properties,
+          geometry: {
+            type: "Point",
+            coordinates,
+          },
+        }),
+    ),
+  });
+});
 app.use("*", serveStatic({
   root: "../dist",
   rewriteRequestPath: (path) => path === '/' ? '/index.html' : path,
