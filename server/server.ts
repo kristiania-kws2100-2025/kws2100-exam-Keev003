@@ -10,9 +10,9 @@ app.get("/", async (c) => {
   return c.text("Hello World");
 });
 
-app.get("/kws2100-exam-Keev003/public/api/grunnskoler", async (c) => {
+app.get("/kws2100-exam-Keev003/api/grunnskoler", async (c) => {
   const result = await postgresql.query(
-    "select skolenavn from grunnskoler_3697913259634315b061b324a3f2cf59.grunnskole",
+    `select skolenavn, st_transform(posisjon, 4326)::json as geometry from grunnskoler_3697913259634315b061b324a3f2cf59.grunnskole`,
   );
   return c.json({
     type: "FeatureCollection",
@@ -22,7 +22,16 @@ app.get("/kws2100-exam-Keev003/public/api/grunnskoler", async (c) => {
         name: "urn:ogc:def:crs:OGC:1.3:CRS84",
       },
     },
-    features: result.rows,
+    features: result.rows.map(
+      ({ geometry: { coordinates }, ...properties }) => ({
+        type: "Feature",
+        properties,
+        geometry: {
+          type: "Point",
+          coordinates,
+        },
+      }),
+    ),
   });
 });
 
