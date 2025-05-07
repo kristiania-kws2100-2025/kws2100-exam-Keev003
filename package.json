@@ -5,6 +5,7 @@
   "scripts": {
     "test": "tsc --noEmit && prettier --check .",
     "dev": "vite",
+    "start": "cd server && npm start",
     "build": "vite build",
     "prepare": "husky",
     "predeploy": "npm run build",

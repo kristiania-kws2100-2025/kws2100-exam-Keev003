@@ -34,5 +34,8 @@ app.get("/api/grunnskoler", async (c) => {
     ),
   });
 });
-
-serve(app);
+const port = process.env.PORT ? parseInt(process.env.PORT) : 3080;
+serve({
+  fetch: app.fetch,
+  port
+});
