@@ -1,10 +1,10 @@
 on:
   push:
-    branches: ["main", "feedback", "lecture/*"]
+    branches: ["main", "feedback"]
 permissions:
-  id-token: write # to verify the deployment originates from an appropriate source
-  pages: write # to deploy to Pages
-  contents: read # to checkout private repositories
+  id-token: write
+  pages: write
+  contents: read
 jobs:
   build:
     runs-on: ubuntu-latest

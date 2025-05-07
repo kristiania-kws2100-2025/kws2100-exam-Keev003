@@ -15,7 +15,7 @@ const osmLayer = new TileLayer({ source: new OSM() });
 
 const elementarySchool = new VectorLayer({
   source: new VectorSource({
-    url: "/kws2100-exam-Keev003/api/grunnskoler",
+    url: "/api/grunnskoler",
     format: new GeoJSON(),
   }),
 });
