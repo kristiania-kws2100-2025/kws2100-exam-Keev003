@@ -13,9 +13,9 @@ useGeographic();
 
 const osmLayer = new TileLayer({ source: new OSM() });
 
-const railwayStationLayer = new VectorLayer({
+const elementarySchool = new VectorLayer({
   source: new VectorSource({
-    url: "/kws2100-exam-Keev003/public/api/jernbanestasjoner",
+    url: "/kws2100-exam-Keev003/public/api/grunnskoler",
     format: new GeoJSON(),
   }),
 });
@@ -43,7 +43,7 @@ const highSchool = new VectorLayer({
 
 const map = new Map({
   view: new View({ center: [10.8, 59.9], zoom: 8 }),
-  layers: [osmLayer, railwayStationLayer, railwayLayer, counties, highSchool],
+  layers: [osmLayer, elementarySchool, railwayLayer, counties, highSchool],
 });
 
 export function Application() {
