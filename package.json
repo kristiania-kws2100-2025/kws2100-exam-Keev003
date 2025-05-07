@@ -13,7 +13,7 @@
     "db:elementarySchool:heroku": "npm run db:elementarySchool:download && psql $DATABASE_URL < tmp/Befolkning_0000_Norge_25833_Grunnskoler_PostGIS.sql",
     "db:railway:heroku": "npm run db:railway:download && psql $DATABASE_URL < tmp/Samferdsel_0000_Norge_25833_Banenettverk_PostGIS.sql",
     "db:heroku:postgis": "echo 'create extension postgis' | psql $DATABASE_URL",
-    "db:heroku": "npm run db:heroku:postgis && npm run db:elementarySchool:heroku",
+    "db:heroku": "npm run db:heroku:postgis && npm run db:elementarySchool:heroku && npm run db:railway:heroku",
     "db:elementarySchool": "npm run db:elementarySchool:download && npm run db:elementarySchool:import",
     "db:elementarySchool:download": "download --extract --out tmp https://nedlasting.geonorge.no/geonorge/Befolkning/Grunnskoler/PostGIS/Befolkning_0000_Norge_25833_Grunnskoler_PostGIS.zip",
     "db:elementarySchool:import": "docker exec -i /postgis /usr/bin/psql --user postgres < tmp/Befolkning_0000_Norge_25833_Grunnskoler_PostGIS.sql",
