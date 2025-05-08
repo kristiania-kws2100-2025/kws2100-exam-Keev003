@@ -83,7 +83,10 @@ export function Application() {
         tailorHazardLayer,
       ],
       view: new View({ center: [10.8, 59.9], zoom: 8 }),
-      controls: defaultControls().extend([overview]),
+      controls: defaultControls({ zoom: false }).extend([
+        overview,
+        zoomControl,
+      ]),
     });
 
     mapInstance.current = map;
