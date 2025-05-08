@@ -37,9 +37,8 @@ app.get("/api/grunnskoler", async (c) => {
 
 app.get("/api/jernbanelinjer", async (c) => {
   const result = await postgresql.query(`
-    SELECT json_build_object('type', 'FeatureCollection','features', json_agg(json_build_object('type', 'Feature','geometry', 
-        ST_AsGeoJSON(ST_Transform(senterlinje, 4326))::json,'properties', to_jsonb(t) - 'senterlinje'))) AS geojson
-    FROM banenettverk_cc734c5dc3204a9a821d69ffe8453e96.banelenke t;`,
+    SELECT banenavn, st_transform(senterlinje, 4326)::json as geometry
+    FROM banenettverk_cc734c5dc3204a9a821d69ffe8453e96.banelenke;`,
   );
   return c.json({
     type: "FeatureCollection",
