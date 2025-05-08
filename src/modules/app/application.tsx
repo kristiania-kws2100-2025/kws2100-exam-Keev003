@@ -15,6 +15,8 @@ import {
   floodStyle,
   hazardStyle,
 } from "./styles/vectorStyles";
+import { Zoom } from "ol/control";
+import "./styles/custom-map.css";
 
 useGeographic();
 
@@ -68,6 +70,8 @@ export function Application() {
     });
 
     overviewControlRef.current = overview;
+
+    const zoomControl = new Zoom({ className: "custom-zoom" });
 
     const map = new Map({
       target,
