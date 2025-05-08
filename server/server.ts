@@ -38,7 +38,9 @@ app.get("/api/grunnskoler", async (c) => {
 app.get("/api/jernbanelinjer", async (c) => {
   const result = await postgresql.query(`
     SELECT banenavn, st_transform(senterlinje, 4326)::json as geometry
-    FROM banenettverk_cc734c5dc3204a9a821d69ffe8453e96.banelenke;`,
+    FROM banenettverk_cc734c5dc3204a9a821d69ffe8453e96.banelenke
+    LIMIT 500
+    ;`,
   );
   return c.json({
     type: "FeatureCollection",
