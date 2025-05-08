@@ -59,7 +59,7 @@ export function Application() {
       style: floodStyle,
     });
 
-    const tailorHazardLayer = new VectorLayer({
+    const landslideHazardLayer = new VectorLayer({
       source: new VectorSource({
         url: "/api/skreddfare",
         format: new GeoJSON(),
@@ -83,7 +83,7 @@ export function Application() {
         elementarySchool,
         railwayLayer,
         floodLayer,
-        tailorHazardLayer,
+        landslideHazardLayer,
       ],
       view: new View({ center: [10.8, 59.9], zoom: 8 }),
       controls: defaultControls({ zoom: false }).extend([
