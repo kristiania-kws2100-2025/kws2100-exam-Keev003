@@ -34,9 +34,22 @@ const floodLayer = new VectorLayer({
   }),
 });
 
+const tailorHazardLayer = new VectorLayer({
+  source: new VectorSource({
+    url: "/api/skreddfare",
+    format: new GeoJSON(),
+  }),
+});
+
 const map = new Map({
   view: new View({ center: [10.8, 59.9], zoom: 8 }),
-  layers: [osmLayer, elementarySchool, railwayLayer, floodLayer],
+  layers: [
+    osmLayer,
+    elementarySchool,
+    railwayLayer,
+    floodLayer,
+    tailorHazardLayer,
+  ],
 });
 
 export function Application() {
