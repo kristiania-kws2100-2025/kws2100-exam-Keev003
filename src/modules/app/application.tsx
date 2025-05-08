@@ -95,32 +95,32 @@ export function Application() {
     mapInstance.current = map;
 
     // Overlay for popup
-    const overlay = new Overlay({
-      element: popupRef.current ?? document.createElement("div"),
+    if (!mapRef.current || !popupRef.current) return;
+
+    const popup = new Overlay({
+      element: popupRef.current,
       positioning: "bottom-center",
       stopEvent: false,
       offset: [0, -10],
     });
+    mapInstance.current?.addOverlay(popup);
 
-    map.addOverlay(overlay);
-    overlayRef.current = overlay;
-
-    map.on("singleclick", (event) => {
-      const feature = map.forEachFeatureAtPixel(event.pixel, (feat) => feat);
-      if (feature) {
+    mapInstance.current?.on("click", function (evt) {
+      mapInstance.current?.forEachFeatureAtPixel(evt.pixel, function (feature) {
         const props = feature.getProperties();
-        popupRef.current!.innerHTML = `<div class="bg-white rounded shadow p-2 text-sm">
-          <strong>${props.skolenavn}</strong>
-        </div>`;
-        overlay.setPosition(event.coordinate);
-      } else {
-        overlay.setPosition(undefined);
-      }
+        popup.setPosition(evt.coordinate);
+        if (popupRef.current) {
+          popupRef.current.innerHTML = `
+          <div class="bg-white p-2 rounded shadow">
+            <strong>${props.skolenavn ?? "Ukjent"}</strong>
+          </div>
+        `;
+        }
+      });
     });
 
     return () => {
-      map.setTarget(undefined);
-      mapInstance.current = null;
+      mapInstance.current?.removeOverlay(popup);
     };
   }, []);
 
