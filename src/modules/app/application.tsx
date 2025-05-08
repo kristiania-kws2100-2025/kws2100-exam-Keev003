@@ -146,6 +146,11 @@ export function Application() {
         Toggle Overview
       </button>
       <div ref={mapRef} className="w-100" style={{ height: "100vh" }} />
+      <div
+        ref={popupRef}
+        className="ol-popup position-absolute"
+        style={{ zIndex: 1001 }}
+      />
     </div>
   );
 }
