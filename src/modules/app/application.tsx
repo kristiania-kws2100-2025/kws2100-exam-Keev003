@@ -17,12 +17,15 @@ import {
 } from "./styles/vectorStyles";
 import { Zoom } from "ol/control";
 import "./styles/custom-map.css";
+import Overlay from "ol/Overlay";
 
 useGeographic();
 
 export function Application() {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstance = useRef<Map | null>(null);
+  const popupRef = useRef<HTMLDivElement | null>(null);
+  const overlayRef = useRef<Overlay | null>(null);
   const overviewControlRef = useRef<OverviewMap | null>(null);
   const [showOverview, setShowOverview] = useState(true);
 
@@ -90,6 +93,30 @@ export function Application() {
     });
 
     mapInstance.current = map;
+
+    // Overlay for popup
+    const overlay = new Overlay({
+      element: popupRef.current ?? document.createElement("div"),
+      positioning: "bottom-center",
+      stopEvent: false,
+      offset: [0, -10],
+    });
+
+    map.addOverlay(overlay);
+    overlayRef.current = overlay;
+
+    map.on("singleclick", (event) => {
+      const feature = map.forEachFeatureAtPixel(event.pixel, (feat) => feat);
+      if (feature) {
+        const props = feature.getProperties();
+        popupRef.current!.innerHTML = `<div class="bg-white rounded shadow p-2 text-sm">
+          <strong>${props.skolenavn}</strong>
+        </div>`;
+        overlay.setPosition(event.coordinate);
+      } else {
+        overlay.setPosition(undefined);
+      }
+    });
 
     return () => {
       map.setTarget(undefined);
