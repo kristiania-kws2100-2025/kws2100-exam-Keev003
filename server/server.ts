@@ -62,6 +62,29 @@ app.get("/api/jernbanelinjer", async (c) => {
   });
 });
 
+app.get("/api/flomsoner", async (c) => {
+  const result = await postgresql.query(`
+    SELECT flomsonenavn, st_transform(omrade, 4326)::json AS geometry
+    FROM flomsoner_1529319085a74cb4a984f168f5cf63f2.analyseomrade
+  `);
+  return c.json({
+    type: "FeatureCollection",
+    crs: {
+      type: "name",
+      properties: {
+        name: "urn:ogc:def:crs:OGC:1.3:CRS84",
+      },
+    },
+    features: result.rows.map(({ geometry: { coordinates }, ...properties }) => ({
+      type: "Feature",
+      properties,
+      geometry: {
+        type: "Polygon",
+        coordinates,
+      },
+    })),
+  });
+});
 
 app.use("*", serveStatic({
   root: "../dist",
