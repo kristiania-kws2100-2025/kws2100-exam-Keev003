@@ -34,6 +34,7 @@ app.get("/api/grunnskoler", async (c) => {
     ),
   });
 });
+
 app.get("/api/jernbanelinjer", async (c) => {
   const result = await postgresql.query(`
     SELECT json_build_object('type', 'FeatureCollection','features', json_agg(json_build_object('type', 'Feature','geometry', 
@@ -60,6 +61,8 @@ app.get("/api/jernbanelinjer", async (c) => {
     ),
   });
 });
+
+
 app.use("*", serveStatic({
   root: "../dist",
   rewriteRequestPath: (path) => path === '/' ? '/index.html' : path,
