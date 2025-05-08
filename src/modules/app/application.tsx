@@ -7,8 +7,14 @@ import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import { GeoJSON } from "ol/format";
 import { OverviewMap, defaults as defaultControls } from "ol/control";
-
+import "bootstrap/dist/css/bootstrap.min.css";
 import "ol/ol.css";
+import {
+  elementaryStyle,
+  railwayStyle,
+  floodStyle,
+  hazardStyle,
+} from "./styles/vectorStyles";
 
 useGeographic();
 
@@ -29,6 +35,7 @@ export function Application() {
         url: "/api/grunnskoler",
         format: new GeoJSON(),
       }),
+      style: elementaryStyle,
     });
 
     const railwayLayer = new VectorLayer({
@@ -36,6 +43,7 @@ export function Application() {
         url: "/api/jernbanelinjer",
         format: new GeoJSON(),
       }),
+      style: railwayStyle,
     });
 
     const floodLayer = new VectorLayer({
@@ -43,6 +51,7 @@ export function Application() {
         url: "/api/flomsoner",
         format: new GeoJSON(),
       }),
+      style: floodStyle,
     });
 
     const tailorHazardLayer = new VectorLayer({
@@ -50,6 +59,7 @@ export function Application() {
         url: "/api/skreddfare",
         format: new GeoJSON(),
       }),
+      style: hazardStyle,
     });
 
     const overview = new OverviewMap({
@@ -93,20 +103,15 @@ export function Application() {
   }, [showOverview]);
 
   return (
-    <>
+    <div className="position-relative w-100 h-100">
       <button
-        onClick={() => setShowOverview((v: boolean) => !v)}
-        style={{
-          position: "absolute",
-          zIndex: 1000,
-          top: 10,
-          left: 10,
-          padding: "6px 10px",
-        }}
+        className="btn btn-dark position-absolute m-3 shadow"
+        style={{ zIndex: 1000 }}
+        onClick={() => setShowOverview((v) => !v)}
       >
         Toggle Overview
       </button>
-      <div ref={mapRef} style={{ width: "100%", height: "100vh" }} />
-    </>
+      <div ref={mapRef} className="w-100" style={{ height: "100vh" }} />
+    </div>
   );
 }
