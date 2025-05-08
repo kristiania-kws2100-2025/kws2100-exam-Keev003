@@ -6,7 +6,7 @@ import { useGeographic } from "ol/proj";
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import { GeoJSON } from "ol/format";
-import { OverviewMap } from "ol/control";
+import { OverviewMap, defaults as defaultControls } from "ol/control";
 
 import "ol/ol.css";
 
@@ -55,9 +55,9 @@ const map = new Map({
 
 export function Application() {
   const mapRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     if (!mapRef.current) return;
-
     const target = mapRef.current;
 
     const baseLayer = new TileLayer({ source: new OSM() });
@@ -70,8 +70,11 @@ export function Application() {
     const map = new Map({
       target,
       layers: [baseLayer],
-      view: new View({ center: [10.8, 59.9], zoom: 8 }),
-      controls: [overviewControl],
+      view: new View({
+        center: [10.8, 59.9], // [lon, lat]
+        zoom: 8,
+      }),
+      controls: defaultControls().extend([overviewControl]),
     });
 
     return () => map.setTarget(undefined);
